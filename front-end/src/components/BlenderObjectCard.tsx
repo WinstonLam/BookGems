@@ -1,20 +1,23 @@
 // src/components/BlenderObjectCard.tsx
-import React from "react";
+
 import { Canvas } from "@react-three/fiber";
 import BlenderObject from "./BlenderObject";
+import { OrbitControls } from "@react-three/drei";
+
+
 import "../styles/BlenderObjectCard.css";
 
-interface BlenderObjectCardProps {
-  modelPath: string;
-}
 
-const BlenderObjectCard: React.FC<BlenderObjectCardProps> = ({ modelPath }) => {
+
+
+const BlenderObjectCard = () => {
   return (
     <div className="card">
       <Canvas>
         <ambientLight />
+        <OrbitControls />
         <pointLight position={[10, 10, 10]} />
-        <BlenderObject modelPath={modelPath} />
+        <BlenderObject />
       </Canvas>
     </div>
   );

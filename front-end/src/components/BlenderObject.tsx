@@ -1,16 +1,16 @@
 // src/components/BlenderObject.tsx
-import React from "react";
-import { useLoader } from "@react-three/fiber";
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+import { Suspense } from "react";
+import Popsicle from "../Popsicle";
 
-interface BlenderObjectProps {
-  modelPath: string;
-}
 
-const BlenderObject: React.FC<BlenderObjectProps> = ({ modelPath }) => {
-  const gltf = useLoader(GLTFLoader, modelPath);
 
-  return <primitive object={gltf.scene} />;
+
+const BlenderObject = () => {
+  return (
+    <Suspense fallback={null}>
+      <Popsicle />
+    </Suspense>
+  );
 };
 
 export default BlenderObject;
