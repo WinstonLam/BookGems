@@ -1,16 +1,20 @@
 // src/components/BlenderObjectCard.tsx
-
 import React, { useState } from "react";
-import { Canvas } from "@react-three/fiber";
-import BlenderObject from "./BlenderObject";
-import { OrbitControls } from "@react-three/drei";
+
+// styles
 import styles from "../styles/BlenderObjectCardStyles";
+
+// components
+import BlenderObject from "./BlenderObject";
+import { Canvas } from "@react-three/fiber";
+import { OrbitControls } from "@react-three/drei";
+import InputField from "./InputField";
 
 // Helper function to convert degrees to radians
 const degreesToRadians = (degrees: number) => degrees * (Math.PI / 180);
 
 const BlenderObjectCard: React.FC = () => {
-  const [userText, setUserText] = useState<string>("Hello World");
+  const [userText, setUserText] = useState<string>("");
 
   return (
     <div style={styles.card}>
@@ -21,13 +25,15 @@ const BlenderObjectCard: React.FC = () => {
           }
         `}
       </style>
-      <input
-        type="text"
+
+      <InputField
         value={userText}
-        onChange={(e) => setUserText(e.target.value)}
-        style={{ marginBottom: "10px", padding: "5px" }}
-        placeholder="Enter text"
+        onChange={setUserText}
+        label="Enter Title"
+        id="text"
+        required={true}
       />
+
       <div style={styles.canvasContainer}>
         <Canvas>
           <ambientLight intensity={0.1} />
