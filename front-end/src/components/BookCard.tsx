@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import styles from "../styles/BlenderObjectCardStyles";
 
 // components
-import BlenderObject from "./BlenderObject";
+import BlenderObject from "./BookModel";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import InputField from "./InputField";
@@ -13,7 +13,7 @@ import InputField from "./InputField";
 // Helper function to convert degrees to radians
 const degreesToRadians = (degrees: number) => degrees * (Math.PI / 180);
 
-const BlenderObjectCard: React.FC = () => {
+const BookCard: React.FC = () => {
   const [userText, setUserText] = useState<string>("");
 
   return (
@@ -54,4 +54,4 @@ const BlenderObjectCard: React.FC = () => {
   );
 };
 
-export default BlenderObjectCard;
+export default BookCard;

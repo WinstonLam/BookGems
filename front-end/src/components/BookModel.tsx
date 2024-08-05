@@ -70,7 +70,7 @@ const TexturedCube: React.FC<{ text: string }> = ({ text }) => {
   );
 };
 
-const BlenderObject: React.FC<{ text: string }> = ({ text }) => {
+const BookModel: React.FC<{ text: string }> = ({ text }) => {
   return (
     <Suspense fallback={null}>
       <TexturedCube text={text} />
@@ -78,4 +78,4 @@ const BlenderObject: React.FC<{ text: string }> = ({ text }) => {
   );
 };
 
-export default BlenderObject;
+export default BookModel;

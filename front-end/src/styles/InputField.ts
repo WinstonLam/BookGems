@@ -20,16 +20,17 @@ const styles: { [key: string]: CSSProperties } = {
     flexDirection: "column",
   },
   input: {
-    padding: "10px",
+    padding: "10px 10px 15px 10px",
     border: "1px solid rgba(var(--primary-color))",
     borderRadius: "1rem",
     backgroundColor: "white",
+    textOverflow: "ellipsis",
   },
- 
+
   label: {
     position: "absolute",
     left: "10%",
-    top: "10%",
+    top: "20%",
     textAlign: "left",
     transition: "0.3s",
     pointerEvents: "none",
@@ -39,8 +40,8 @@ const styles: { [key: string]: CSSProperties } = {
   },
   labelHasValue: {
     position: "absolute",
-    left: "13%",
-    top: "-23%",
+    left: "12%",
+    top: "-11%",
     textAlign: "left",
     transition: "0.3s",
     fontSize: "12px",
@@ -48,30 +49,29 @@ const styles: { [key: string]: CSSProperties } = {
     width: "100%",
     color: "rgba(var(--text-color))",
   },
+
   inputError: {
     color: "red",
     opacity: 0,
-    height: "50px",
-    width: "100%",
+    height: "15px",
+    width: "80%",
     pointerEvents: "none",
-    fontWeight: "bold",
-    fontSize: "16px",
-    margin: "0 0 0 15px",
+    fontSize: "10px",
     transition: "all 0.3s ease-in-out",
     textAlign: "left",
   },
+
   inputErrorShow: {
     color: "red",
     opacity: 1,
-    height: "50px",
-    width: "100%",
+    height: "15px",
+    width: "80%",
     pointerEvents: "none",
-    fontWeight: "bold",
-    fontSize: "16px",
-    margin: "5px 0 0 15px",
+    fontSize: "10px",
     transition: "all 0.3s ease-in-out",
     textAlign: "left",
   },
+
   eyeShow: {
     stroke: "rgb(var(--second-color))",
     fill: "transparent",
@@ -85,6 +85,13 @@ const styles: { [key: string]: CSSProperties } = {
   },
   eyeHide: {
     fill: "rgb(var(--primary-color))",
+  },
+  charCount: {
+    position: "absolute",
+    top: "45%",
+    right: "9%",
+    color: "rgba(var(--text-color))",
+    fontSize: "10px",
   },
 };
 

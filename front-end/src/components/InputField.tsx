@@ -21,6 +21,7 @@ const InputField: React.FC<InputFieldProps> = ({
   const [error, setError] = useState(false);
   const [message, setMessage] = useState(span || "");
   const [focused, setFocused] = useState(false);
+  const [charCount, setCharCount] = useState(value.length);
 
   useEffect(() => {
     setHasValue(value !== "");
@@ -39,9 +40,19 @@ const InputField: React.FC<InputFieldProps> = ({
     }
   }, [submitted, hasValue, required, span]);
 
-  const checkValue = (event: React.ChangeEvent<HTMLInputElement>) => {
+  useEffect(() => {
+    if (charCount >= (limit ? limit : 50)) {
+      setError(true);
+      setMessage("Wow there, that's a long title!");
+
+
+    }
+  }, [charCount]);
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (onChange) onChange(event.target.value);
     setHasValue(event.target.value !== "");
+    setCharCount(event.target.value.length);
 
     if (strict === "digit" && !/^\d*$/.test(event.target.value)) {
       setError(true);
@@ -67,24 +78,29 @@ const InputField: React.FC<InputFieldProps> = ({
       className={`input-field${required ? "" : "-optional"}`}
       style={required ? styles.inputField : styles.inputFieldOptional}
     >
+      <div style={styles.labelContainer}>
+        <label
+          htmlFor={id}
+          style={hasValue || focused ? styles.labelHasValue : styles.label}
+        >
+          {label}
+        </label>
+        <div style={styles.charCount}>
+          {charCount}/{limit ? limit : 50}
+        </div>
+      </div>
       <input
         value={value}
         type={!showValue ? "text" : "password"}
         id={id}
-        onChange={checkValue}
+        onChange={handleChange}
         onFocus={handleFocus}
         onBlur={() => setFocused(false)}
         className={hasValue ? "has-value" : ""}
-        maxLength={limit ? limit : 25}
+        maxLength={limit ? limit : 50}
         disabled={disbabled}
         style={styles.input}
       />
-      <label
-        htmlFor={id}
-        style={hasValue || focused ? styles.labelHasValue : styles.label}
-      >
-        {label}
-      </label>
       <div style={error ? styles.inputErrorShow : styles.inputError}>
         {message}
       </div>
