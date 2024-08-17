@@ -10,6 +10,7 @@ const InputField: React.FC<InputFieldProps> = ({
   required,
   submitted,
   onChange,
+  onKeyDown, // Accept the onKeyDown prop
   sensitive,
   limit,
   strict,
@@ -44,8 +45,6 @@ const InputField: React.FC<InputFieldProps> = ({
     if (charCount >= (limit ? limit : 50)) {
       setError(true);
       setMessage("Wow there, that's a long title!");
-
-
     }
   }, [charCount]);
 
@@ -100,6 +99,7 @@ const InputField: React.FC<InputFieldProps> = ({
         maxLength={limit ? limit : 50}
         disabled={disbabled}
         style={styles.input}
+        onKeyDown={onKeyDown} // Attach the onKeyDown handler
       />
       <div style={error ? styles.inputErrorShow : styles.inputError}>
         {message}

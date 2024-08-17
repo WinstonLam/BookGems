@@ -1,4 +1,4 @@
-import * as THREE from 'three';
+import * as THREE from "three";
 
 export interface InputFieldProps {
   value: string;
@@ -7,6 +7,7 @@ export interface InputFieldProps {
   required: boolean;
   submitted?: boolean;
   onChange?: (value: any) => void;
+  onKeyDown?: (event: React.KeyboardEvent<HTMLInputElement>) => void;
   sensitive?: boolean;
   limit?: number;
   strict?: string;
@@ -16,4 +17,6 @@ export interface InputFieldProps {
 
 export interface BookModelProps {
   text: string;
+  color: string;
+  rotation: number[];
 }
