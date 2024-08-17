@@ -1,11 +1,10 @@
-// src/components/BlenderObjectCard.tsx
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 
 // styles
 import styles from "../styles/BlenderObjectCardStyles";
 
 // components
-import BlenderObject from "./BookModel";
+import BookModel from "../models/Book";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import InputField from "./InputField";
@@ -15,6 +14,14 @@ const degreesToRadians = (degrees: number) => degrees * (Math.PI / 180);
 
 const BookCard: React.FC = () => {
   const [userText, setUserText] = useState<string>("");
+  const bookModelRef = useRef<any>(null); // Reference to BookModel component
+
+  // Function to handle animation
+  const handleAnimate = () => {
+    if (bookModelRef.current) {
+      bookModelRef.current.triggerAnimation(); // Trigger animation in BookModel
+    }
+  }
 
   return (
     <div style={styles.card}>
@@ -34,22 +41,25 @@ const BookCard: React.FC = () => {
         required={true}
       />
 
+      <button onClick={handleAnimate}>Play</button>
+
       <div style={styles.canvasContainer}>
-        <Canvas>
-          <ambientLight intensity={0.1} />
-          <pointLight position={[0, 1, 2]} />
-          <BlenderObject text={userText} />
+        <Canvas camera={{ position: [180, 180, 0] }}>
+          <ambientLight intensity={3} />
+          <pointLight position={[1, 1, 1]} />
+          <BookModel ref={bookModelRef} text={userText} /> {/* Pass ref to BookModel */}
           <OrbitControls
             minDistance={1.5}
-            maxDistance={1.5}
+            maxDistance={3.5}
             enableZoom={false}
-            minPolarAngle={degreesToRadians(60)} // Convert 60 degrees to radians
-            maxPolarAngle={degreesToRadians(120)} // Convert 120 degrees to radians
-            minAzimuthAngle={degreesToRadians(-45)} // Convert -45 degrees to radians
-            maxAzimuthAngle={degreesToRadians(45)} // Convert 45 degrees to radians
+            minPolarAngle={degreesToRadians(60)}
+            maxPolarAngle={degreesToRadians(120)}
+            minAzimuthAngle={degreesToRadians(-45)}
+            maxAzimuthAngle={degreesToRadians(90)}
           />
         </Canvas>
       </div>
+
     </div>
   );
 };

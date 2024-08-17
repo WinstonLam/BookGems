@@ -1,4 +1,6 @@
-export default interface InputFieldProps {
+import * as THREE from 'three';
+
+export interface InputFieldProps {
   value: string;
   label: string;
   id: string;
@@ -10,4 +12,8 @@ export default interface InputFieldProps {
   strict?: string;
   disbabled?: boolean;
   span?: string;
+}
+
+export interface BookModelProps {
+  text: string;
 }

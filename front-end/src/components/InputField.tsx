@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import InputFieldProps from "../interfaces/global-interfaces";
+import { InputFieldProps } from "../interfaces/global-interfaces";
 import EyeSvg from "../icons/Eye";
 import styles from "../styles/InputField";
 
