@@ -43,8 +43,14 @@ const styles: { [key: string]: CSSProperties } = {
     cursor: "pointer",
   },
   coverImageContainer: {
-    // width: "500px",
-    // height: "500px",
+    position: "absolute",
+    zIndex: 10,
+    width: "500px",
+    height: "500px",
+  },
+  coverImage: {
+    width: "50%",
+    height: "50%",
   },
 };
 

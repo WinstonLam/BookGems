@@ -1,6 +1,5 @@
 import React, { useState, useRef } from "react";
 
-
 // styles
 import styles from "../styles/BookCreationStyles";
 
@@ -19,10 +18,6 @@ const BookCreation: React.FC = () => {
   const [rotation, setRotation] = useState<number[]>([0, 0, 0]);
   const [coverImage, setCoverImage] = useState<string | null>(null); // State for the cover image
   const bookModelRef = useRef<any>(null); // Reference to BookModel component
-
-
-
-
 
   const handleMouseMove = (event: React.MouseEvent) => {
     const { clientX, clientY, currentTarget } = event;
@@ -56,9 +51,8 @@ const BookCreation: React.FC = () => {
             <OpenLibSearch
               search={search}
               setSearch={setSearch}
-
+              setCoverImage={setCoverImage}
             />
-
           </div>
 
           <div style={styles.manual}>
@@ -94,16 +88,15 @@ const BookCreation: React.FC = () => {
               text={{ title, author }}
               color={color}
               rotation={rotation}
-            // coverImage={coverImage}
+              coverImage={coverImage}
             />
           </Canvas>
-
         </div>
         <button onClick={handleAnimate}>Flip</button>
 
-        {coverImage && (
+        {/* {coverImage && (
           <img src={coverImage} alt="Book Cover" style={styles.coverImage} />
-        )}
+        )} */}
       </div>
     </div>
   );

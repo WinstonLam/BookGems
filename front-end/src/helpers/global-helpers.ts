@@ -86,24 +86,31 @@ export const createTextTexture = (
   const yAuthor = size / 1.25;
   wrapText(context, text.author, x, yAuthor, maxWidth, lineHeight);
 
-  console.log(
-    `Created texture with text: "${text}" on a ${size}x${size} canvas.`
-  );
-
   return new THREE.CanvasTexture(canvas);
 };
 
-// Helper function to apply color and texture to a material
 export const applyBookMaterials = (
   material: THREE.Material,
   color: string,
-  bookTexture: THREE.Texture
+  bookTexture: THREE.Texture | null,
+  coverTexture?: THREE.Texture | null
 ) => {
   if (material.name === "Cover.001" || material.name === "FrontCover") {
-    (material as THREE.MeshStandardMaterial).color.set(color);
-    if (material.name === "FrontCover") {
-      (material as THREE.MeshStandardMaterial).map = bookTexture;
+    if (material.name === "Cover.001" || (material.name === "FrontCover" && !coverTexture)){
+      (material as THREE.MeshStandardMaterial).color.set(color);
     }
+
+    
+    // Use coverTexture if available, otherwise fall back to bookTexture
+    if (material.name === "FrontCover") {
+      if (coverTexture) {
+        (material as THREE.MeshStandardMaterial).map = coverTexture;
+        (material as THREE.MeshStandardMaterial).color.set(0xffffff);
+      } else if (bookTexture) {
+        (material as THREE.MeshStandardMaterial).map = bookTexture;
+      }
+    }
+
     material.needsUpdate = true; // Ensure material is updated
   }
 };

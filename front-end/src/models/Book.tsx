@@ -9,23 +9,44 @@ import React, {
 import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { useLoader, useFrame } from "@react-three/fiber";
-import { createTextTexture } from "../helpers/global-helpers";
+import {
+  createTextTexture,
+  applyBookMaterials,
+} from "../helpers/global-helpers";
 import { BookModelProps } from "../interfaces/global-interfaces";
 import { Suspense } from "react";
-import { applyBookMaterials } from "../helpers/global-helpers";
+import { TextureLoader } from "three";
 
 // Component to load and display the book model with dynamic text
 const BookModel = forwardRef<any, BookModelProps>(
-  ({ text, color, rotation }, ref) => {
+  ({ text, color, rotation, coverImage }, ref) => {
     const groupRef = useRef<THREE.Group>(null); // Reference to the group containing meshes
     const bookPivotRef = useRef<THREE.Group>(null); // Pivot group reference
     const mixerRef = useRef<THREE.AnimationMixer | null>(null);
     const [flipped, setFlipped] = useState<boolean>(false);
 
     // Load the GLTF model
-    const gltf = useLoader(GLTFLoader, process.env.PUBLIC_URL + "/NewBook.gltf");
+    const gltf = useLoader(
+      GLTFLoader,
+      process.env.PUBLIC_URL + "/NewBook.gltf"
+    );
 
-    const bookTexture = useMemo(() => createTextTexture(text), [text]);
+    // Create textures
+    const bookTexture = useMemo(() => {
+      if (!coverImage) {
+        return createTextTexture(text);
+      }
+      return null;
+    }, [text, coverImage]);
+
+    const coverTexture = useMemo(() => {
+      if (coverImage) {
+        const loader = new TextureLoader();
+        return loader.load(coverImage);
+      }
+      return null;
+    }, [coverImage]);
+
     useEffect(() => {
       if (groupRef.current && bookPivotRef.current) {
         // Center the book model in the pivot group
@@ -42,9 +63,16 @@ const BookModel = forwardRef<any, BookModelProps>(
             const mesh = child as THREE.Mesh;
 
             if (Array.isArray(mesh.material)) {
-              mesh.material.forEach((material) => applyBookMaterials(material, color, bookTexture));
+              mesh.material.forEach((material) =>
+                applyBookMaterials(material, color, bookTexture, coverTexture)
+              );
             } else if (mesh.material) {
-              applyBookMaterials(mesh.material, color, bookTexture);
+              applyBookMaterials(
+                mesh.material,
+                color,
+                bookTexture,
+                coverTexture
+              );
             }
           }
         });
@@ -63,7 +91,7 @@ const BookModel = forwardRef<any, BookModelProps>(
           console.warn("Animation 'CubeAction.001' not found");
         }
       }
-    }, [gltf, bookTexture, color]);
+    }, [gltf, bookTexture, coverTexture, color]); // Add coverTexture to dependencies
 
     useFrame((state, delta) => {
       if (bookPivotRef.current) {

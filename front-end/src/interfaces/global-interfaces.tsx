@@ -22,12 +22,13 @@ export interface BookModelProps {
   };
   color: string;
   rotation: number[];
+  coverImage: string | null;
 }
-
 
 export interface OpenLibSearchProps {
   search: string;
   setSearch: (search: string) => void;
+  setCoverImage: (image: string | null) => void;
 }
 
 export interface BookData {
@@ -36,5 +37,8 @@ export interface BookData {
   publishDate: string;
   isbn: string;
   olid: string;
-
+  thumbnail: {
+    small: string;
+    large: string;
+  } | null;
 }
