@@ -16,7 +16,25 @@ export interface InputFieldProps {
 }
 
 export interface BookModelProps {
-  text: string;
+  text: {
+    title: string;
+    author: string;
+  };
   color: string;
   rotation: number[];
+}
+
+
+export interface OpenLibSearchProps {
+  search: string;
+  setSearch: (search: string) => void;
+}
+
+export interface BookData {
+  title: string;
+  author: string;
+  publishDate: string;
+  isbn: string;
+  olid: string;
+
 }

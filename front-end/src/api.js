@@ -8,6 +8,7 @@ export const fetchBookCover = async (searchTerm, size = "L") => {
     // Attempt to treat the searchTerm as an ISBN first
     const url = `${COVER_BASE_URL}/b/isbn/${searchTerm}-${size}.jpg`;
     const response = await axios.get(url, { responseType: "blob" });
+    console.log(response);
 
     // Create an object URL for the fetched image
     const imageUrl = URL.createObjectURL(response.data);

@@ -9,7 +9,7 @@ import { createTextTexture } from "../helpers/global-helpers";
 // Cube with Dynamic Text on One Side
 const TexturedCube: React.FC<{ text: string }> = ({ text }) => {
     const meshRef = useRef<THREE.Mesh>(null);
-    const texture = useMemo(() => createTextTexture(text), [text]);
+    // const texture = useMemo(() => createTextTexture(text), [text]);
 
     useEffect(() => {
         if (meshRef.current) {
@@ -25,7 +25,7 @@ const TexturedCube: React.FC<{ text: string }> = ({ text }) => {
         new THREE.MeshStandardMaterial({ color: "white" }), // left face
         new THREE.MeshStandardMaterial({ color: "white" }), // top face
         new THREE.MeshStandardMaterial({ color: "white" }), // bottom face
-        new THREE.MeshStandardMaterial({ map: texture }), // front face (with text)
+        // new THREE.MeshStandardMaterial({ map: texture }), // front face (with text)
         new THREE.MeshStandardMaterial({ color: "white" }), // back face
     ];
 

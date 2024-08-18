@@ -10,12 +10,11 @@ const styles: { [key: string]: CSSProperties } = {
     height: "100vh",
     overflow: "hidden",
   },
-  wrapper: {  
+  wrapper: {
     width: "80%",
     height: "80%",
     display: "flex",
     boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
-
   },
   form: {
     border: "1px solid #ddd",
@@ -28,6 +27,17 @@ const styles: { [key: string]: CSSProperties } = {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
+  },
+  openLib: {
+    display: "flex",
+    width: "100%",
+    marginBottom: "16px",
+  },
+  searchBar: {
+    width: "50%",
+    display: "flex",
+    flexDirection: "column",
+    marginRight: "16px",
   },
   canvasContainer: {
     width: "80%",

@@ -53,15 +53,18 @@ const wrapText = (
 
 // Function to wrap text and create a texture with text
 export const createTextTexture = (
-  text: string,
-  maxWidth: number = 200
+  text: {
+    title: string;
+    author: string;
+  },
+  maxWidth: number = 370
 ): THREE.CanvasTexture => {
   const canvas = document.createElement("canvas");
   const context = canvas.getContext("2d");
 
   if (!context) return new THREE.CanvasTexture(canvas);
 
-  const size = 256;
+  const size = 400;
   canvas.width = size;
   canvas.height = size;
 
@@ -70,18 +73,37 @@ export const createTextTexture = (
   context.fillRect(0, 0, size, size);
   // Set text properties
   context.fillStyle = "black";
-  context.font = "25px Arial";
+  context.font = "50px Arial";
   context.textAlign = "center";
-  context.textBaseline = "middle";
 
-  const lineHeight = 30;
+  const lineHeight = 45;
   const x = size / 2;
-  const y = size / 4;
-  wrapText(context, text, x, y, maxWidth, lineHeight);
+  // Draw title at the top
+  const yTitle = size / 6.25;
+  wrapText(context, text.title, x, yTitle, maxWidth, lineHeight);
+
+  // Draw author at the bottom
+  const yAuthor = size / 1.25;
+  wrapText(context, text.author, x, yAuthor, maxWidth, lineHeight);
 
   console.log(
     `Created texture with text: "${text}" on a ${size}x${size} canvas.`
   );
 
   return new THREE.CanvasTexture(canvas);
+};
+
+// Helper function to apply color and texture to a material
+export const applyBookMaterials = (
+  material: THREE.Material,
+  color: string,
+  bookTexture: THREE.Texture
+) => {
+  if (material.name === "Cover.001" || material.name === "FrontCover") {
+    (material as THREE.MeshStandardMaterial).color.set(color);
+    if (material.name === "FrontCover") {
+      (material as THREE.MeshStandardMaterial).map = bookTexture;
+    }
+    material.needsUpdate = true; // Ensure material is updated
+  }
 };

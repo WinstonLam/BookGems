@@ -12,6 +12,7 @@ import { useLoader, useFrame } from "@react-three/fiber";
 import { createTextTexture } from "../helpers/global-helpers";
 import { BookModelProps } from "../interfaces/global-interfaces";
 import { Suspense } from "react";
+import { applyBookMaterials } from "../helpers/global-helpers";
 
 // Component to load and display the book model with dynamic text
 const BookModel = forwardRef<any, BookModelProps>(
@@ -19,14 +20,12 @@ const BookModel = forwardRef<any, BookModelProps>(
     const groupRef = useRef<THREE.Group>(null); // Reference to the group containing meshes
     const bookPivotRef = useRef<THREE.Group>(null); // Pivot group reference
     const mixerRef = useRef<THREE.AnimationMixer | null>(null);
-
     const [flipped, setFlipped] = useState<boolean>(false);
 
     // Load the GLTF model
-    const gltf = useLoader(GLTFLoader, "/NewBook.gltf");
+    const gltf = useLoader(GLTFLoader, process.env.PUBLIC_URL + "/NewBook.gltf");
 
-    const texture = useMemo(() => createTextTexture(text), [text]);
-
+    const bookTexture = useMemo(() => createTextTexture(text), [text]);
     useEffect(() => {
       if (groupRef.current && bookPivotRef.current) {
         // Center the book model in the pivot group
@@ -42,25 +41,10 @@ const BookModel = forwardRef<any, BookModelProps>(
           if ((child as THREE.Mesh).isMesh) {
             const mesh = child as THREE.Mesh;
 
-            // Handle case where mesh.material is an array
             if (Array.isArray(mesh.material)) {
-              mesh.material.forEach((material) => {
-                if (material.name === "Cover.001" && "map" in material) {
-                  (material as THREE.MeshStandardMaterial).map = texture; // Apply texture to the correct material
-                  (material as THREE.MeshStandardMaterial).color.set(color); // Set the color
-                  material.needsUpdate = true; // Ensure material is updated
-                }
-              });
+              mesh.material.forEach((material) => applyBookMaterials(material, color, bookTexture));
             } else if (mesh.material) {
-              // Handle case where mesh.material is a single material
-              if (
-                (mesh.name === "Cube" || mesh.material.name === "Cover.001") &&
-                "map" in mesh.material
-              ) {
-                (mesh.material as THREE.MeshStandardMaterial).map = texture; // Apply texture to the correct material
-                (mesh.material as THREE.MeshStandardMaterial).color.set(color); // Set the color
-                mesh.material.needsUpdate = true; // Ensure material is updated
-              }
+              applyBookMaterials(mesh.material, color, bookTexture);
             }
           }
         });
@@ -79,7 +63,7 @@ const BookModel = forwardRef<any, BookModelProps>(
           console.warn("Animation 'CubeAction.001' not found");
         }
       }
-    }, [gltf, texture, color]);
+    }, [gltf, bookTexture, color]);
 
     useFrame((state, delta) => {
       if (bookPivotRef.current) {
