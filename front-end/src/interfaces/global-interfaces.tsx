@@ -23,11 +23,10 @@ export interface BookModelProps {
   color: string;
   rotation: number[];
   coverImage: string | null;
+  setLoading: (loading: boolean) => void;
 }
 
 export interface OpenLibSearchProps {
-  search: string;
-  setSearch: (search: string) => void;
   setCoverImage: (image: string | null) => void;
 }
 

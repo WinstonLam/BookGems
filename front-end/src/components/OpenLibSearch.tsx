@@ -5,11 +5,8 @@ import { OpenLibSearchProps, BookData } from "../interfaces/global-interfaces";
 import SearchSvg from "../icons/Search";
 import { searchBooks } from "../api"; // Import the API functions
 
-const OpenLibSearch: React.FC<OpenLibSearchProps> = ({
-  search,
-  setSearch,
-  setCoverImage,
-}) => {
+const OpenLibSearch: React.FC<OpenLibSearchProps> = ({ setCoverImage }) => {
+  const [search, setSearch] = useState<string>("");
   const [searchData, setSearchData] = useState<BookData[]>([]);
   const [selectedBook, setSelectedBook] = useState<BookData | null>(null);
 

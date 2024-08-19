@@ -105,7 +105,7 @@ export const applyBookMaterials = (
     if (material.name === "FrontCover") {
       if (coverTexture) {
         (material as THREE.MeshStandardMaterial).map = coverTexture;
-        (material as THREE.MeshStandardMaterial).color.set(0xffffff);
+        (material as THREE.MeshStandardMaterial).color.setScalar(0.6);
       } else if (bookTexture) {
         (material as THREE.MeshStandardMaterial).map = bookTexture;
       }

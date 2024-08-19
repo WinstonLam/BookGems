@@ -11,12 +11,12 @@ import { HexColorPicker } from "react-colorful";
 import OpenLibSearch from "../components/OpenLibSearch";
 
 const BookCreation: React.FC = () => {
-  const [search, setSearch] = useState<string>("");
   const [title, setTitle] = useState<string>("");
   const [author, setAuthor] = useState<string>("");
   const [color, setColor] = useState<string>("#282844");
   const [rotation, setRotation] = useState<number[]>([0, 0, 0]);
   const [coverImage, setCoverImage] = useState<string | null>(null); // State for the cover image
+  const [loading, setLoading] = useState<boolean>(false);
   const bookModelRef = useRef<any>(null); // Reference to BookModel component
 
   const handleMouseMove = (event: React.MouseEvent) => {
@@ -36,6 +36,11 @@ const BookCreation: React.FC = () => {
     }
   };
 
+  const handleCoverImage = (image: string | null) => {
+    setLoading(true);
+    setCoverImage(image);
+  };
+
   return (
     <div style={styles.container}>
       <div style={styles.wrapper}>
@@ -48,11 +53,7 @@ const BookCreation: React.FC = () => {
         `}
           </style>
           <div style={styles.openLib}>
-            <OpenLibSearch
-              search={search}
-              setSearch={setSearch}
-              setCoverImage={setCoverImage}
-            />
+            <OpenLibSearch setCoverImage={handleCoverImage} />
           </div>
 
           <div style={styles.manual}>
@@ -80,6 +81,7 @@ const BookCreation: React.FC = () => {
           <div style={styles.actions}></div>
         </div>
         <div style={styles.canvasContainer} onMouseMove={handleMouseMove}>
+          {loading && <div>Loading...</div>}
           <Canvas camera={{ position: [5, 0, -2], fov: 30 }}>
             <ambientLight intensity={3} />
             <pointLight position={[1, 1, 1]} />
@@ -89,14 +91,11 @@ const BookCreation: React.FC = () => {
               color={color}
               rotation={rotation}
               coverImage={coverImage}
+              setLoading={setLoading}
             />
           </Canvas>
         </div>
         <button onClick={handleAnimate}>Flip</button>
-
-        {/* {coverImage && (
-          <img src={coverImage} alt="Book Cover" style={styles.coverImage} />
-        )} */}
       </div>
     </div>
   );

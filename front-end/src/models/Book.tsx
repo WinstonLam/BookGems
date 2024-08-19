@@ -19,7 +19,7 @@ import { TextureLoader } from "three";
 
 // Component to load and display the book model with dynamic text
 const BookModel = forwardRef<any, BookModelProps>(
-  ({ text, color, rotation, coverImage }, ref) => {
+  ({ text, color, rotation, coverImage, setLoading }, ref) => {
     const groupRef = useRef<THREE.Group>(null); // Reference to the group containing meshes
     const bookPivotRef = useRef<THREE.Group>(null); // Pivot group reference
     const mixerRef = useRef<THREE.AnimationMixer | null>(null);
@@ -91,6 +91,7 @@ const BookModel = forwardRef<any, BookModelProps>(
           console.warn("Animation 'CubeAction.001' not found");
         }
       }
+      setLoading(false);
     }, [gltf, bookTexture, coverTexture, color]); // Add coverTexture to dependencies
 
     useFrame((state, delta) => {
