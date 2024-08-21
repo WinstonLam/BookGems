@@ -38,6 +38,7 @@ const BookCreation: React.FC = () => {
 
   const handleCoverImage = (image: string | null) => {
     setLoading(true);
+    console.log(image);
     setCoverImage(image);
   };
 
