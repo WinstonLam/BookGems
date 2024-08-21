@@ -1,12 +1,7 @@
 import React from "react";
+import { SvgProps } from "../interfaces/global-interfaces"
 
-type SearchSvgProps = {
-  className: string;
-  onClick?: () => void;
-  style?: React.CSSProperties;
-};
-
-const SearchSvg: React.FC<SearchSvgProps> = ({ className, onClick, style }) => {
+const SearchSvg: React.FC<SvgProps> = ({ className, onClick, style }) => {
   const handleClick = () => {
     if (onClick) {
       onClick();

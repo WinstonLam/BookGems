@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import React from "react";
 
 export interface InputFieldProps {
   value: string;
@@ -40,4 +41,15 @@ export interface BookData {
     small: string;
     large: string;
   } | null;
+}
+
+export interface SvgProps {
+  className: string;
+  onClick?: () => void;
+  style?: React.CSSProperties;
+};
+
+export interface AnimatedDivProps {
+  children: React.ReactNode;
+  baseStyle?: React.CSSProperties;
 }

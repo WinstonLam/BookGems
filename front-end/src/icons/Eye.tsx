@@ -1,12 +1,9 @@
 import React from "react";
+import { SvgProps } from "../interfaces/global-interfaces"
 
-type EyeSvgProps = {
-  className: string;
-  onClick?: () => void;
-  style?: React.CSSProperties;
-};
 
-const EyeSvg: React.FC<EyeSvgProps> = ({ className, onClick, style }) => {
+
+const EyeSvg: React.FC<SvgProps> = ({ className, onClick, style }) => {
   const handleClick = () => {
     if (onClick) {
       onClick();
